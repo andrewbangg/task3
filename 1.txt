@@ -1,0 +1,14 @@
+select Customer.CustomerId, Customer.FirstName, Customer.Phone, Customer.Company
+from Customer
+	join Invoice on Invoice.CustomerId = Customer.CustomerId
+	join InvoiceLine on Invoice.InvoiceId = InvoiceLine.InvoiceId
+	join Track on InvoiceLine.TrackId = Track.TrackId
+	join Genre on Track.GenreId = Genre.GenreId
+	join Employee on Customer.SupportRepId = Employee.EmployeeId
+		where 
+	strftime('%Y-%m-%d', Employee.BirthDate) <= strftime('%Y-%m-%d', '1969-05-19')
+		AND
+	Genre.Name != 'Rock'
+	group by Customer.FirstName having count(*) > 1
+	order by Customer.City asc, Customer.Email desc
+limit 10

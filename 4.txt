@@ -1,0 +1,10 @@
+SELECT 
+s3.LastName,
+s3.FirstName,
+s3.Phone
+FROM InvoiceLine s1
+INNER JOIN Customer s3 on s2.CustomerId = s3.CustomerId
+INNER JOIN Invoice s2 on s1.InvoiceId = s2.InvoiceId
+WHERE
+(SELECT COUNT(*) as count FROM Customer WHERE City = s3.City) > 1
+GROUP by s3.FirstName

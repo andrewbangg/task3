@@ -1,0 +1,9 @@
+SELECT g. Name, t.Name, t.Composer, a.Title FROM Track t
+INNER JOIN Album a ON a.AlbumId = t.AlbumId
+INNER JOIN Genre g ON t.GenreId = g.GenreId WHERE t.GenreId = (SELECT g.GenreId from Track t
+ INNER JOIN InvoiceLine il ON t.TrackId = il.TrackId
+ INNER JOIN Genre g ON t.GenreId = g.GenreId
+ GROUP BY g.Name
+ ORDER BY SUM(t.UnitPrice*il.Quantity) DESC
+ LIMIT 1)
+ORDER BY t.Composer ASC

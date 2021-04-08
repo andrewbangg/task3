@@ -1,0 +1,11 @@
+select Customer.FirstName, Customer.Phone
+	from Customer
+join Invoice on Invoice.CustomerId = Customer.CustomerId
+join InvoiceLine as I on Invoice.InvoiceId = I.InvoiceId
+join (select UnitPrice, InvoiceLineId
+	from InvoiceLine
+order by UnitPrice desc
+limit 1) as MaxPrice 
+on I.UnitPrice = MaxPrice.UnitPrice
+group by Customer.FirstName having count(*) > 1
+order by Customer.FirstName asc

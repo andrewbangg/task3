@@ -1,0 +1,2 @@
+SELECT i.BillingCity FROM Invoice i GROUP BY i.BillingCity ORDER BY SUM(i.total) DESC
+LIMIT 3
